@@ -3,24 +3,16 @@ project:
   output-dir: docs 
 
 website:
-  title: "MATH283 Project Three Collab"
+  title: "CSE 111 Final Project Fun and Cool"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: reactor_cooling_model_pt_1.qmd
-        text: Brainstorm 1
-      - href: brainstorm_2.qmd
-        text: Brainstorm 2
-      - href: brainstorm_3.qmd
-        text: Brainstorm 3
       - href: U03_REPORT.qmd
         text: U03_REPORT
-      - href: CH_3_PROB_7_example.qmd
-        text: Chapter Three, Problem Seven (HW Presentation)
   page-footer: 
     border: true
-    left: "Corey Silver and Parker Lee BYU-I 2026©"
+    left: "Corey Silver 2026©"
 format:
   html:
     toc: true
