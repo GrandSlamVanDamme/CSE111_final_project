@@ -22,11 +22,11 @@ def error_analyzer(X, Y, n, k=-1):
     of the individual error functions. Default value of k is -1.
     """
 
-    LS2 = leastsquerror(Y, np.polyval(LS2_fit(X, Y, n), X))[k]
+    Ls2 = leastsquerror(Y, np.polyval(LS2_fit(X, Y, n), X))[k]
     AbsDev = absdev_error(Y, np.polyval(absdev_fit(X, Y, n), X))[k]
     Cheby = cheb_error(Y, np.polyval(chebyshevify(X, Y, n), X))
 
-    return [LS2, AbsDev, Cheby]
+    return [Ls2, AbsDev, Cheby]
 
 
 def leastsquerror(Y, F):

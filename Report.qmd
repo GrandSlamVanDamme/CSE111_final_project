@@ -282,7 +282,7 @@ As can be seen in the table above, naïve observation looks to be correct, here.
 Since the exponential model shows the lowest error, we'll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after $24$ hours of cooling.
 ```{python}
 
-temp_finder(X, Y, 1)
+main()
 ```
 
 # 7. Validation

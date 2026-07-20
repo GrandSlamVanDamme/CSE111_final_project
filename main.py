@@ -46,7 +46,6 @@ def main():
     error_compare_table(X, Y, N)
     coeff_table(X, Y, FUNC_TYPE, N)
     plotter(X, Y, FUNC_TYPE, N)
-    temp_finder(X, Y, N)
 
 
 if __name__ == "__main__":

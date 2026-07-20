@@ -162,7 +162,7 @@ def absdev_fit(X, Y, n):
     return result.x
 
 
-def LS2_fit(X, Y, n):
+def Ls2_fit(X, Y, n):
     """
     Takes two arrays, x = [data 1] and Y = [data 2].
     fits model function
@@ -170,9 +170,9 @@ def LS2_fit(X, Y, n):
     such that (sum|Yi-Fi|^2, i ϵ NN) is minimized.
     returns f(x) as an array
     """
-    LS2 = np.polyfit(X, Y, n)
+    Ls2 = np.polyfit(X, Y, n)
 
-    return LS2
+    return Ls2
 
 
 def x_list(X):
@@ -197,8 +197,8 @@ def fitter_happier_better(X, Y, n):
 
     exes = x_list(X)
 
-    LS2 = np.polyval(LS2_coeffs, exes)
+    Ls2 = np.polyval(LS2_coeffs, exes)
     cheb = np.polyval(cheb_coeffs, exes)
     absdev = np.polyval(abs_dev_coeffs, exes)
 
-    return [exes, LS2, cheb, absdev]
+    return [exes, Ls2, cheb, absdev]
