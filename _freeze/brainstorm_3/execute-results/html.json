@@ -1,0 +1,12 @@
+{
+  "hash": "487ad857ab18f5e8b77ede0c527edc22",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Brainstorm 3\nformat: html\nhighlight-style: default\ncode-block-bg: '#000000'\n---\n\n",
+    "supporting": [
+      "brainstorm_3_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
