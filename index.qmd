@@ -1,12 +1,12 @@
-## Corey and Parker's Unit 3 Project 
-### MATH283 Spring '26
-#### v.0.8
+## CSE 111 FINAL Project
+### CSE 111 Spring '26
+#### v.1.11
 
-This is the homepage for the U03 project. We'll be modelling the cooling rate of a nuclear reactor. Use the directory above to navigate to different sections of the project. 
+This is the homepage for the CSE 111 Project. I'll' be modelling the cooling rate of a nuclear reactor. Use the directory above to navigate to different sections of the project. 
 
 ![Maine Yankee Nuclear Plant.jpg is licensed by the US-NRC under CC BY 2.0](1280px-Maine_Yankee_Nuclear_Power_Plant.jpg)
 
-This site is under construction. Upon completion, it will host open-source python code, relevant data, and a record of the modelling process, and a report summarizing our findings.
+This site is under construction. Upon completion, it will host open-source python code, relevant data, and a record of the modelling process, and a report summarizing my findings.
 
 
 

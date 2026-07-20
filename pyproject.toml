@@ -16,6 +16,7 @@ dependencies = [
     "rich>=15.0.0",
     "scipy>=1.18.0",
     "shiny>=1.6.3",
+    "shinylive>=0.8.9",
     "shinywidgets>=0.8.1",
     "sympy>=1.14.0",
     "tqdm>=4.69.0",

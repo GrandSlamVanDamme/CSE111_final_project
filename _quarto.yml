@@ -8,8 +8,8 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: U03_REPORT.qmd
-        text: U03_REPORT
+      - href: REPORT.qmd
+        text: REPORT
   page-footer: 
     border: true
     left: "Corey Silver 2026©"
