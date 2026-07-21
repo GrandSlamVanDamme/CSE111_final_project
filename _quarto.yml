@@ -8,7 +8,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: report.qmd
+      - href: Report.qmd
         text: REPORT
       - href: showcase.qmd
         text: main function showcase 
