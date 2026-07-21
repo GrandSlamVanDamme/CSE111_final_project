@@ -13,7 +13,7 @@ import pandas as pd
 
 import fitting_functions as ff
 import error_analysis as ea
-# import IPython.display as ipd
+import IPython.display as ipd
 
 
 def error_compare_table(X, Y, n, func_list):
@@ -39,7 +39,7 @@ def error_compare_table(X, Y, n, func_list):
         ),
     )
 
-    # ipd.display(table_du_fromage)
+    ipd.display(table_du_fromage)
 
     # ipd.Markdown(table_du_fromage.to_markdown(index=False))
 
@@ -83,7 +83,7 @@ def coeff_table(X, Y, func_type, n):
         columns=pd.MultiIndex.from_product([["Function Parameters"], c_list]),
     )
 
-    # ipd.display(table_du_fromage)
+    ipd.display(table_du_fromage)
 
     # ipd.Markdown(table_du_fromage.to_markdown(index=False))
 
