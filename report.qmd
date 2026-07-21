@@ -10,6 +10,8 @@ filters:
 # Modeling Report (Modified from MATH 283 Unit 3 Project)
 ## Corey Silver
 ### Scenario: Cooling Performance During Reactor Shutdown
+### Gemini conversation to help troubleshoot this evil, evil project after 20+ hours of trying to wrangle quarto and shinylive and launch this thrice-cursed website:
+https://share.gemini.google/6xGTCKjqUCSY
 
 Engineers are studying how quickly reactor components cool following shutdown.
 
@@ -155,7 +157,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         return coeff_table(X, Y, "polynomial", poly_deg)
 
 
-
+app = App(app_ui, server)
 
 ## file: main.py
 {{< include main.py >}}
@@ -166,7 +168,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 ## file: plots_and_tables.py
 {{< include plots_and_tables.py >}}
 
-## file: error_analyzer.py
+## file: error_analysis.py
 {{< include error_analysis.py >}}
 
 ## file: requirements.txt
@@ -267,7 +269,7 @@ app = App(app_ui, server)
 ## file: plots_and_tables.py
 {{< include plots_and_tables.py >}}
 
-## file: error_analyzer.py
+## file: error_analysis.py
 {{< include error_analysis.py >}}
 
 ## file: requirements.txt
