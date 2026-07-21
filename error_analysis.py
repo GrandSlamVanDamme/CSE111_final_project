@@ -21,10 +21,12 @@ def error_analyzer(X, Y, n, k=-1):
     type of model given by model_name and degree given by n. For error up to an arbitrary point, edit indices
     of the individual error functions. Default value of k is -1.
     """
-
-    Ls2 = leastsquerror(Y, np.polyval(ff.Ls2_fit(X, Y, n), X))[k]
-    AbsDev = absdev_error(Y, np.polyval(ff.absdev_fit(X, Y, n), X))[k]
-    Cheby = cheb_error(Y, np.polyval(ff.chebyshevify(X, Y, n), X))
+    try:
+        Ls2 = leastsquerror(Y, np.polyval(ff.Ls2_fit(X, Y, n), X))[k]
+        AbsDev = absdev_error(Y, np.polyval(ff.absdev_fit(X, Y, n), X))[k]
+        Cheby = cheb_error(Y, np.polyval(ff.chebyshevify(X, Y, n), X))
+    except KeyError:
+        print("For list L of length n, k must be in (-1, n-1)")
 
     return [Ls2, AbsDev, Cheby]
 
@@ -91,7 +93,7 @@ def residuals(Y, F, func_type="linear"):
 
     resid = []
     if func_type == "exponential" or func_type == "power":
-        Y = [np.e**y for y in Y]
+        Y = [np.e**y for y in Y]  # calculated with non-linearized y values
     else:
         pass
 

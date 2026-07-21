@@ -16,7 +16,11 @@ def poly_degree(n):
     a polynomial of degree n.
     """
     if n < 0:
-        n = int(input("Please enter a whole number for the value of n"))
+        try:
+            n = int(input("Please enter a whole number for the value of n"))
+        except ValueError:
+            n = 3
+            print("There. n=3. Happy?")
 
     degree_list = ["zeroth", "linear", "quadratic", "cubic", "quartic", "quintic"]
 
@@ -36,19 +40,19 @@ def functionator(X, Y, func_type, n):
     """
     fit_type = func_type
     k = n
-
-    if fit_type == "polynomial":
-        fit_type = poly_degree(n)
-    elif fit_type == "exponential":
-        Y = np.log(Y)
-        k = 1
-    elif fit_type == "power":
-        Y = np.log(Y)
-        X = np.log(X)
-        k = 1
-    elif fit_type == "linear":
-        k = 1
-    else:
+    try:
+        if fit_type == "polynomial":
+            fit_type = poly_degree(n)
+        elif fit_type == "exponential":
+            Y = np.log(Y)
+            k = 1
+        elif fit_type == "power":
+            Y = np.log(Y)
+            X = np.log(X)
+            k = 1
+        elif fit_type == "linear":
+            k = 1
+    except TypeError:  # if n is not an integer
         print("Request cannot be completed, defaulting to rat")
         import matplotlib.image as mpimg
 

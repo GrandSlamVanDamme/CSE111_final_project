@@ -22,9 +22,11 @@ def error_compare_table(X, Y, n, func_list):
     for func in func_list:
         f = ff.functionator(X, Y, func, n)
         X, Y, k, func_type = f[0:5]
-
-        entry = ea.error_analyzer(X, Y, k)
-        table_list.append(entry)
+        try:
+            entry = ea.error_analyzer(X, Y, k)
+            table_list.append(entry)
+        except ValueError:
+            print("please restart program")
 
     table_du_fromage = pd.DataFrame(
         table_list,
@@ -88,6 +90,48 @@ def coeff_table(X, Y, func_type, n):
     # ipd.Markdown(table_du_fromage.to_markdown(index=False))
 
     return table_du_fromage
+
+
+def plot_one(X, Y, func_type, n, fit_type, font_size=12):
+    """
+    Plots different fit functions for a given data fit type (linear, poly, etc)
+    """
+    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
+
+    fitter = ff.fitter_happier_better(X, Y, n)
+
+    exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
+    fits = {["Least Squares", "Chebyshev", "Absolute Deviation"]: [Ls2, cheb, absdev]}
+
+    # Labels so I don't have to type them thrice
+
+    if func_type == "power":
+        xlab = "$\\ln(hours)$"
+        ylab = "$\\ln()^{\\circ} C)$"
+
+    elif func_type == "exponential":
+        xlab = "Hours passed since Reactor Shutdown"
+        ylab = "$\\ln()^{\\circ} C)$"
+
+    else:
+        xlab = "Hours passed since Reactor Shutdown"
+        ylab = "Reactor temperature in $^{\\circ} C$"
+
+    fig1 = plt.figure(figsize=(7, 20), layout="tight")
+    # fig1.suptitle(f"Below are the optimizations for a {func_type} fit")
+
+    plt.rcParams["font.size"] = font_size
+    # plt.rcParams["axes.labelpad"] = 10
+
+    dist = 40
+    pointsize = 40
+    point_color = "black"
+
+    plt.scatter(X, Y, s=pointsize, c=point_color)
+    plt.plot(exes, fits.get(fit_type), color="r")
+    plt.xlabel(xlab)
+    plt.ylabel(ylab, rotation=55, labelpad=(dist), fontsize=12)
+    plt.title("f{fit_type} Fit")
 
 
 def plotter(X, Y, func_type, n, font_size=12):

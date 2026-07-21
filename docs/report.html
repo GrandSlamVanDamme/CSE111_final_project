@@ -292,7 +292,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<div id="232f2fc2" class="cell" data-execution_count="1">
+<div id="0d1c982f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -351,7 +351,7 @@ window.Quarto = {
 <section id="linear" class="level2">
 <h2 class="anchored" data-anchor-id="linear">Linear:</h2>
 <p>Of form <span class="math inline">\(T(t)=c_1\cdot t + c_2\)</span>.</p>
-<div id="3e191754" class="cell" data-execution_count="2">
+<div id="cc8a7c2e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"linear"</span>, <span class="dv">1</span>)</span>
@@ -397,7 +397,7 @@ window.Quarto = {
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -454,7 +454,7 @@ window.Quarto = {
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 500
+#| viewerHeight: 1000
 
 """
 code modified from example in docs at https://quarto-ext.github.io/shinylive/
@@ -475,6 +475,7 @@ app_ui = ui.page_fluid(
             ui.card(
                 ui.h4("Poly-fitter"),
                 ui.input_slider("n", "Degree of Polynomial Fit:", min=1, max=20, value=2),
+                ui.input_radio_buttons("fit_type", "Fit Type", ["Least Squares", "Chebyshev", "Absolute Deviation"]),
                 bg="#C0C0C0"
         ),
 
@@ -500,7 +501,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.plot
     def conspiracy():
         poly_deg = input.n()
-        return plotter(X, Y, "polynomial", poly_deg)
+        fit_type = input.fit_type()
+        return plot_one(X, Y, "polynomial", poly_deg, fit_type, font_size = "8")
     @render.table
     def coefficients():
         poly_deg = input.n()
@@ -859,6 +861,48 @@ def coeff_table(X, Y, func_type, n):
     return table_du_fromage
 
 
+def plot_one(X, Y, func_type, n, fit_type, font_size=12):
+    """
+    Plots different fit functions for a given data fit type (linear, poly, etc)
+    """
+    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
+
+    fitter = ff.fitter_happier_better(X, Y, n)
+
+    exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
+    fits = {["Least Squares", "Chebyshev", "Absolute Deviation"]: [Ls2, cheb, absdev]}
+
+    # Labels so I don't have to type them thrice
+
+    if func_type == "power":
+        xlab = "$\\ln(hours)$"
+        ylab = "$\\ln()^{\\circ} C)$"
+
+    elif func_type == "exponential":
+        xlab = "Hours passed since Reactor Shutdown"
+        ylab = "$\\ln()^{\\circ} C)$"
+
+    else:
+        xlab = "Hours passed since Reactor Shutdown"
+        ylab = "Reactor temperature in $^{\\circ} C$"
+
+    fig1 = plt.figure(figsize=(7, 20), layout="tight")
+    # fig1.suptitle(f"Below are the optimizations for a {func_type} fit")
+
+    plt.rcParams["font.size"] = font_size
+    # plt.rcParams["axes.labelpad"] = 10
+
+    dist = 40
+    pointsize = 40
+    point_color = "black"
+
+    plt.scatter(X, Y, s=pointsize, c=point_color)
+    plt.plot(exes, fits.get(fit_type), color="r")
+    plt.xlabel(xlab)
+    plt.ylabel(ylab, rotation=55, labelpad=(dist), fontsize=12)
+    plt.title("f{fit_type} Fit")
+
+
 def plotter(X, Y, func_type, n, font_size=12):
     """
     Plots different fit functions for a given data fit type (linear, poly, etc)
@@ -1068,7 +1112,7 @@ IPython</code></pre>
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
 <p>Simple inspection of the plots makes it look as though the exponential model fits the data most closely. We cannot confirm this hunch, however, until we do some analysis on the error of the various plots.</p>
-<div id="029a7742" class="cell" data-execution_count="3">
+<div id="84aeeb09" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"exponential"</span>, <span class="dv">1</span>)</span>
@@ -1114,7 +1158,7 @@ IPython</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -1170,7 +1214,7 @@ IPython</code></pre>
 <p><span class="math display">\[
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
-<div id="88f15b17" class="cell" data-execution_count="4">
+<div id="52b40faf" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>poly_deg <span class="op">=</span> <span class="dv">1</span></span>
@@ -1218,7 +1262,7 @@ IPython</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -1665,6 +1709,48 @@ def coeff_table(X, Y, func_type, n):
     return table_du_fromage
 
 
+def plot_one(X, Y, func_type, n, fit_type, font_size=12):
+    """
+    Plots different fit functions for a given data fit type (linear, poly, etc)
+    """
+    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
+
+    fitter = ff.fitter_happier_better(X, Y, n)
+
+    exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
+    fits = {["Least Squares", "Chebyshev", "Absolute Deviation"]: [Ls2, cheb, absdev]}
+
+    # Labels so I don't have to type them thrice
+
+    if func_type == "power":
+        xlab = "$\\ln(hours)$"
+        ylab = "$\\ln()^{\\circ} C)$"
+
+    elif func_type == "exponential":
+        xlab = "Hours passed since Reactor Shutdown"
+        ylab = "$\\ln()^{\\circ} C)$"
+
+    else:
+        xlab = "Hours passed since Reactor Shutdown"
+        ylab = "Reactor temperature in $^{\\circ} C$"
+
+    fig1 = plt.figure(figsize=(7, 20), layout="tight")
+    # fig1.suptitle(f"Below are the optimizations for a {func_type} fit")
+
+    plt.rcParams["font.size"] = font_size
+    # plt.rcParams["axes.labelpad"] = 10
+
+    dist = 40
+    pointsize = 40
+    point_color = "black"
+
+    plt.scatter(X, Y, s=pointsize, c=point_color)
+    plt.plot(exes, fits.get(fit_type), color="r")
+    plt.xlabel(xlab)
+    plt.ylabel(ylab, rotation=55, labelpad=(dist), fontsize=12)
+    plt.title("f{fit_type} Fit")
+
+
 def plotter(X, Y, func_type, n, font_size=12):
     """
     Plots different fit functions for a given data fit type (linear, poly, etc)
@@ -1867,12 +1953,12 @@ pandas
 tabulate</code></pre>
 <p>As can be seen in the table above, naïve observation looks to be correct, here. The exponential cooling model shows a much lower error across the dataset than do any of the polynomial models. Our model requires a focus on safety, so we’ll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.</p>
 <p>Since the exponential model shows the lowest error, we’ll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after <span class="math inline">\(24\)</span> hours of cooling.</p>
-<div id="40d45770" class="cell" data-execution_count="5">
+<div id="2b70ec5c" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>temp_finder(X, Y, N)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>'After 24 hours, we project an estimated reactor temperature of 5.084 degrees centigrade.'</code></pre>
 </div>
 </div>
