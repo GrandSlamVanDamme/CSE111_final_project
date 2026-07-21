@@ -50,25 +50,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-print(ea.residuals(Y, Y))
-print(
-    ea.residuals(
-        Y,
-        np.polyval(
-            ff.chebyshevify(
-                ff.functionator(X, Y, "exponential", N)[0],
-                ff.functionator(X, Y, "exponential", N)[1],
-                ff.functionator(X, Y, "exponential", N)[2],
-            ),
-            ff.x_list(X),
-        ),
-    )
-)
-print(
-    ff.chebyshevify(
-        ff.functionator(X, Y, "exponential", N)[0],
-        ff.functionator(X, Y, "exponential", N)[1],
-        ff.functionator(X, Y, "exponential", N)[2],
-    )
-)

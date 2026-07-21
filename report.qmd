@@ -247,17 +247,13 @@ app_ui = ui.page_fluid(
 )
 
 def server(input: Inputs, output: Outputs, session: Session):
-    """
-    @render.data_frame
-    def error_table():
-        poly_deg = input.n()
-        return main(X, Y, poly_deg)
-    """
     
     @render.table
     def error_table():
-        poly_deg = input.n()
-        return main(X, Y, n=poly_deg)
+        N = input.n() 
+        '''I know you aren't supposed to use capitals for inputs, 
+        but this prevented the need for giving main() arguments''' 
+        return main()
           
 
 app = App(app_ui, server)
