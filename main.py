@@ -26,15 +26,14 @@ import numpy as np
 import scipy as sci
 import pandas as pd
 
-from fitting_functions import *
-from plots_and_tables import *
-from error_analysis import *
+import plots_and_tables as pat
 
 
 X = [1, 2, 4, 8, 12, 18]  # hours from reactor shutdown
 Y = [580, 510, 430, 340, 290, 230]  # temperature of reactor in C
 N = 3  # polynomial degree.
 # Note: Exp and power fits are modeled in linear log-log by functionator().
+FUNC_TYPES = ["linear", "polynomial", "power", "exponential"]
 FUNC_TYPE = "polynomial"
 # Note: FUNC_TYPE can be "linear", "polynomial", "power", or "exponential".
 
@@ -43,9 +42,9 @@ def main():
     """
     The big Huncho Grande Paparoni: fitting, error analysis, plotting.
     """
-    error_compare_table(X, Y, N)
-    coeff_table(X, Y, FUNC_TYPE, N)
-    plotter(X, Y, FUNC_TYPE, N)
+    pat.error_compare_table(X, Y, N, FUNC_TYPES)
+    pat.coeff_table(X, Y, FUNC_TYPE, N)
+    pat.plotter(X, Y, FUNC_TYPE, N)
 
 
 if __name__ == "__main__":

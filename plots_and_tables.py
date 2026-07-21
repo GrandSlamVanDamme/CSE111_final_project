@@ -10,26 +10,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy as sci
 import pandas as pd
+
+import fitting_functions as ff
+import error_analysis as ea
 # import IPython.display as ipd
 
-from fitting_functions import *
-from error_analysis import *
 
-
-def error_compare_table(X, Y, n):
+def error_compare_table(X, Y, n, func_list):
     table_list = []
 
-    for func in FUNC_TYPES:
-        f = functionator(X, Y, func, n)
+    for func in func_list:
+        f = ff.functionator(X, Y, func, n)
         X, Y, k, func_type = f[0:5]
 
-        entry = error_analyzer(X, Y, k)
+        entry = ea.error_analyzer(X, Y, k)
         table_list.append(entry)
 
     table_du_fromage = pd.DataFrame(
         table_list,
         index=pd.MultiIndex.from_product(
-            [["Fit Type"], ["linear", poly_degree(n), "power", "exponential"]]
+            [["Fit Type"], ["linear", ff.poly_degree(n), "power", "exponential"]]
         ),
         columns=pd.MultiIndex.from_product(
             [
@@ -57,12 +57,12 @@ def coeff_table(X, Y, func_type, n):
     # for func in func_types:
     table_list = []
 
-    f = functionator(X, Y, func_type, n)
+    f = ff.functionator(X, Y, func_type, n)
     X, Y, n, func_type = f[0:5]
 
-    LS2_coeffs = LS2_fit(X, Y, n)
-    cheb_coeffs = chebyshevify(X, Y, n)
-    abs_dev_coeffs = absdev_fit(X, Y, n)
+    LS2_coeffs = ff.Ls2_fit(X, Y, n)
+    cheb_coeffs = ff.chebyshevify(X, Y, n)
+    abs_dev_coeffs = ff.absdev_fit(X, Y, n)
 
     coeffs_list = [LS2_coeffs, cheb_coeffs, abs_dev_coeffs]
 
@@ -94,12 +94,12 @@ def plotter(X, Y, func_type, n, font_size=12):
     """
     Plots different fit functions for a given data fit type (linear, poly, etc)
     """
-    X, Y, n, func_type = functionator(X, Y, func_type, n)[0:4]
+    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
 
-    exes = fitter_happier_better(X, Y, n)[0]
-    LS2 = fitter_happier_better(X, Y, n)[1]
-    cheb = fitter_happier_better(X, Y, n)[2]
-    absdev = fitter_happier_better(X, Y, n)[3]
+    exes = ff.fitter_happier_better(X, Y, n)[0]
+    LS2 = ff.fitter_happier_better(X, Y, n)[1]
+    cheb = ff.fitter_happier_better(X, Y, n)[2]
+    absdev = ff.fitter_happier_better(X, Y, n)[3]
 
     # Labels so I don't have to type them thrice
 

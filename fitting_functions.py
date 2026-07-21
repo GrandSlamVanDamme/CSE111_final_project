@@ -9,10 +9,6 @@ import numpy as np
 import scipy as sci
 import pandas as pd
 
-from error_analysis import *
-
-FUNC_TYPES = ["linear", "polynomial", "power", "exponential"]
-
 
 def poly_degree(n):
     """
@@ -191,7 +187,7 @@ def fitter_happier_better(X, Y, n):
     Grabs coefficients from the fit generators
     and returns arrays of actual function output.
     """
-    LS2_coeffs = LS2_fit(X, Y, n)
+    LS2_coeffs = Ls2_fit(X, Y, n)
     cheb_coeffs = chebyshevify(X, Y, n)
     abs_dev_coeffs = absdev_fit(X, Y, n)
 

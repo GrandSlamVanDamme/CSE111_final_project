@@ -33,15 +33,16 @@ import scipy as sci
 import pandas as pd
 import IPython.display as ipd
 from shinylive import *
-from main import *
-from fitting_functions import *
+
 from error_analysis import *
 from plots_and_tables import *
+from fitting_functions import *
+
 
 X = [1, 2, 4, 8, 12, 18]
 # See section 3 for explanation of modification of T data.
 Y = [1.05*y for y in [580, 510, 430, 340, 290, 230]]
-
+N=3
 ```
 
 "A large prediction error could affect cooling procedures and operational decisions.
@@ -282,7 +283,7 @@ As can be seen in the table above, naïve observation looks to be correct, here.
 Since the exponential model shows the lowest error, we'll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after $24$ hours of cooling.
 ```{python}
 
-main()
+temp_finder(X, Y, N)
 ```
 
 # 7. Validation

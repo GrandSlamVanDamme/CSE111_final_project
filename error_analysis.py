@@ -12,7 +12,7 @@ import numpy as np
 import scipy as sci
 import pandas as pd
 
-from fitting_functions import *
+import fitting_functions as ff
 
 
 def error_analyzer(X, Y, n, k=-1):
@@ -22,9 +22,9 @@ def error_analyzer(X, Y, n, k=-1):
     of the individual error functions. Default value of k is -1.
     """
 
-    Ls2 = leastsquerror(Y, np.polyval(LS2_fit(X, Y, n), X))[k]
-    AbsDev = absdev_error(Y, np.polyval(absdev_fit(X, Y, n), X))[k]
-    Cheby = cheb_error(Y, np.polyval(chebyshevify(X, Y, n), X))
+    Ls2 = leastsquerror(Y, np.polyval(ff.Ls2_fit(X, Y, n), X))[k]
+    AbsDev = absdev_error(Y, np.polyval(ff.absdev_fit(X, Y, n), X))[k]
+    Cheby = cheb_error(Y, np.polyval(ff.chebyshevify(X, Y, n), X))
 
     return [Ls2, AbsDev, Cheby]
 
@@ -128,10 +128,10 @@ def temp_finder(X, Y, n):
     """
 
     x = 24
-    X, Y, n = functionator(X, Y, "exponential", n)[0:3]
+    X, Y, n = ff.functionator(X, Y, "exponential", n)[0:3]
 
     # LS2_coeffs = LS2_fit(X, Y, n)
-    cheb_coeffs = chebyshevify(X, Y, n)
+    cheb_coeffs = ff.chebyshevify(X, Y, n)
     # abs_dev_coeffs = absdev_fit(X, Y, n)
 
     # LS2 = np.polyval(LS2_coeffs, x)
