@@ -101,9 +101,7 @@ def plot_one(X, Y, func_type, n, fit_type, font_size=12):
     fitter = ff.fitter_happier_better(X, Y, n)
 
     exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
-    fits = {["Least Squares", "Chebyshev", "Absolute Deviation"]: [Ls2, cheb, absdev]}
-
-    # Labels so I don't have to type them thrice
+    fits = {"Least Squares": Ls2, "Chebyshev": cheb, "Absolute Deviation": absdev}
 
     if func_type == "power":
         xlab = "$\\ln(hours)$"

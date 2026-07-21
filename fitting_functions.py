@@ -15,7 +15,7 @@ def poly_degree(n):
     takes a whole number n and returns a string for labeling
     a polynomial of degree n.
     """
-    if n < 0:
+    if n < 1:
         try:
             n = int(input("Please enter a whole number for the value of n"))
         except ValueError:
