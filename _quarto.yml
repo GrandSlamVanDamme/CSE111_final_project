@@ -10,6 +10,8 @@ website:
         text: Home
       - href: REPORT.qmd
         text: REPORT
+      - href: showcase.qmd
+        text: main function showcase 
   page-footer: 
     border: true
     left: "Corey Silver 2026©"

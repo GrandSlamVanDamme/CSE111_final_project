@@ -168,8 +168,12 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./REPORT.qmd"> 
+    <a class="nav-link active" href="./REPORT.html" aria-current="page"> 
 <span class="menu-text">REPORT</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./showcase.html"> 
+<span class="menu-text">main function showcase</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -187,7 +191,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#modeling-report-taken-from-math-283-unit-3-project" id="toc-modeling-report-taken-from-math-283-unit-3-project" class="nav-link active" data-scroll-target="#modeling-report-taken-from-math-283-unit-3-project">Modeling Report (Taken from MATH 283 Unit 3 Project)</a>
+  <li><a href="#modeling-report-modified-from-math-283-unit-3-project" id="toc-modeling-report-modified-from-math-283-unit-3-project" class="nav-link active" data-scroll-target="#modeling-report-modified-from-math-283-unit-3-project">Modeling Report (Modified from MATH 283 Unit 3 Project)</a>
   <ul class="collapse">
   <li><a href="#corey-silver" id="toc-corey-silver" class="nav-link" data-scroll-target="#corey-silver">Corey Silver</a>
   <ul class="collapse">
@@ -237,8 +241,8 @@ window.Quarto = {
 </header>
 
 
-<section id="modeling-report-taken-from-math-283-unit-3-project" class="level1">
-<h1>Modeling Report (Taken from MATH 283 Unit 3 Project)</h1>
+<section id="modeling-report-modified-from-math-283-unit-3-project" class="level1">
+<h1>Modeling Report (Modified from MATH 283 Unit 3 Project)</h1>
 <section id="corey-silver" class="level2">
 <h2 class="anchored" data-anchor-id="corey-silver">Corey Silver</h2>
 <section id="scenario-cooling-performance-during-reactor-shutdown" class="level3">
@@ -283,7 +287,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<div id="90a8b08a" class="cell" data-execution_count="1">
+<div id="df0bc1ed" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -342,7 +346,7 @@ window.Quarto = {
 <section id="linear" class="level2">
 <h2 class="anchored" data-anchor-id="linear">Linear:</h2>
 <p>Of form <span class="math inline">\(T(t)=c_1\cdot t + c_2\)</span>.</p>
-<div id="c24bd7f4" class="cell" data-execution_count="2">
+<div id="5d92c91d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"linear"</span>, <span class="dv">1</span>)</span>
@@ -391,7 +395,7 @@ window.Quarto = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/cell-3-output-2.png" width="657" height="1905" class="figure-img"></p>
+<p><img src="REPORT_files/figure-html/cell-3-output-2.png" width="657" height="1905" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -525,8 +529,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy as sci
 import pandas as pd
-
-FUNC_TYPES = ["linear", "polynomial", "power", "exponential"]
 
 
 def poly_degree(n):
@@ -1021,7 +1023,7 @@ IPython</code></pre>
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
 <p>Simple inspection of the plots makes it look as though the exponential model fits the data most closely. We cannot confirm this hunch, however, until we do some analysis on the error of the various plots.</p>
-<div id="197c57aa" class="cell" data-execution_count="3">
+<div id="328f1f4e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"exponential"</span>, <span class="dv">1</span>)</span>
@@ -1070,7 +1072,7 @@ IPython</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/cell-4-output-2.png" width="657" height="1905" class="figure-img"></p>
+<p><img src="REPORT_files/figure-html/cell-4-output-2.png" width="657" height="1905" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1083,7 +1085,7 @@ IPython</code></pre>
 <p><span class="math display">\[
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
-<div id="21f99333" class="cell" data-execution_count="4">
+<div id="3b4cfceb" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>poly_deg <span class="op">=</span> <span class="dv">1</span></span>
@@ -1134,7 +1136,7 @@ IPython</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/cell-5-output-2.png" width="657" height="1905" class="figure-img"></p>
+<p><img src="REPORT_files/figure-html/cell-5-output-2.png" width="657" height="1905" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1253,8 +1255,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy as sci
 import pandas as pd
-
-FUNC_TYPES = ["linear", "polynomial", "power", "exponential"]
 
 
 def poly_degree(n):
@@ -1742,7 +1742,7 @@ pandas
 tabulate</code></pre>
 <p>As can be seen in the table above, naïve observation looks to be correct, here. The exponential cooling model shows a much lower error across the dataset than do any of the polynomial models. Our model requires a focus on safety, so we’ll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.</p>
 <p>Since the exponential model shows the lowest error, we’ll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after <span class="math inline">\(24\)</span> hours of cooling.</p>
-<div id="505595c7" class="cell" data-execution_count="5">
+<div id="1eb1a307" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>temp_finder(X, Y, N)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

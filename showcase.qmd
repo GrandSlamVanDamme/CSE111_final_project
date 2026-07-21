@@ -1,0 +1,8 @@
+# Main Function Showcase
+## Look at the cool stuff it does Look
+
+```{python}
+from main import *
+main()
+
+```

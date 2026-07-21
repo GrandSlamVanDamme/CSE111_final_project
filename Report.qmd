@@ -7,7 +7,7 @@ code-block-bg: "#000000"
 filters:
     - shinylive
 ---
-# Modeling Report (Taken from MATH 283 Unit 3 Project)
+# Modeling Report (Modified from MATH 283 Unit 3 Project)
 ## Corey Silver
 ### Scenario: Cooling Performance During Reactor Shutdown
 
