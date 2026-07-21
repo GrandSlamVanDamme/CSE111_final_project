@@ -96,11 +96,12 @@ def plot_one(X, Y, func_type, n, fit_type, font_size=12):
     """
     Plots different fit functions for a given data fit type (linear, poly, etc)
     """
-    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
+    f = ff.functionator(X, Y, func_type, n)
+    X, Y, n, func_type = f[0:5]
 
     fitter = ff.fitter_happier_better(X, Y, n)
 
-    exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
+    exes, Ls2, cheb, absdev = fitter[0:4]
     fits = {"Least Squares": Ls2, "Chebyshev": cheb, "Absolute Deviation": absdev}
 
     if func_type == "power":

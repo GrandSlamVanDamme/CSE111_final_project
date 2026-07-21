@@ -292,7 +292,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<div id="2e185b26" class="cell" data-execution_count="1">
+<div id="f1824c05" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -351,7 +351,7 @@ window.Quarto = {
 <section id="linear" class="level2">
 <h2 class="anchored" data-anchor-id="linear">Linear:</h2>
 <p>Of form <span class="math inline">\(T(t)=c_1\cdot t + c_2\)</span>.</p>
-<div id="2607b1f8" class="cell" data-execution_count="2">
+<div id="ae80ccb8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"linear"</span>, <span class="dv">1</span>)</span>
@@ -397,7 +397,7 @@ window.Quarto = {
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
@@ -888,11 +888,12 @@ def plot_one(X, Y, func_type, n, fit_type, font_size=12):
     """
     Plots different fit functions for a given data fit type (linear, poly, etc)
     """
-    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
+    f = ff.functionator(X, Y, func_type, n)
+    X, Y, n, func_type = f[0:5]
 
     fitter = ff.fitter_happier_better(X, Y, n)
 
-    exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
+    exes, Ls2, cheb, absdev = fitter[0:4]
     fits = {"Least Squares": Ls2, "Chebyshev": cheb, "Absolute Deviation": absdev}
 
     if func_type == "power":
@@ -1137,7 +1138,7 @@ IPython</code></pre>
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
 <p>Simple inspection of the plots makes it look as though the exponential model fits the data most closely. We cannot confirm this hunch, however, until we do some analysis on the error of the various plots.</p>
-<div id="cc32d0ea" class="cell" data-execution_count="3">
+<div id="5c59435e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"exponential"</span>, <span class="dv">1</span>)</span>
@@ -1183,7 +1184,7 @@ IPython</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
@@ -1239,7 +1240,7 @@ IPython</code></pre>
 <p><span class="math display">\[
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
-<div id="fff1b538" class="cell" data-execution_count="4">
+<div id="17a6df70" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>poly_deg <span class="op">=</span> <span class="dv">1</span></span>
@@ -1287,7 +1288,7 @@ IPython</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -1761,11 +1762,12 @@ def plot_one(X, Y, func_type, n, fit_type, font_size=12):
     """
     Plots different fit functions for a given data fit type (linear, poly, etc)
     """
-    X, Y, n, func_type = ff.functionator(X, Y, func_type, n)[0:4]
+    f = ff.functionator(X, Y, func_type, n)
+    X, Y, n, func_type = f[0:5]
 
     fitter = ff.fitter_happier_better(X, Y, n)
 
-    exes, Ls2, cheb, absdev = fitter[0, 1, 2, 3]
+    exes, Ls2, cheb, absdev = fitter[0:4]
     fits = {"Least Squares": Ls2, "Chebyshev": cheb, "Absolute Deviation": absdev}
 
     if func_type == "power":
@@ -2003,7 +2005,7 @@ pandas
 tabulate</code></pre>
 <p>As can be seen in the table above, naïve observation looks to be correct, here. The exponential cooling model shows a much lower error across the dataset than do any of the polynomial models. Our model requires a focus on safety, so we’ll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.</p>
 <p>Since the exponential model shows the lowest error, we’ll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after <span class="math inline">\(24\)</span> hours of cooling.</p>
-<div id="2b8f7fa2" class="cell" data-execution_count="5">
+<div id="82ffe8e9" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>temp_finder(X, Y, N)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2011,7 +2013,7 @@ tabulate</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>After 24 hours, we project an estimated reactor temperature of 161.387 degrees centigrade.</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>np.float64(161.38718417550982)</code></pre>
 </div>
 </div>
