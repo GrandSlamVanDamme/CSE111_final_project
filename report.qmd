@@ -278,6 +278,7 @@ numpy
 scipy
 pandas
 tabulate
+IPython
 ```
 
 As can be seen in the table above, naïve observation looks to be correct, here. The exponential cooling model shows a much lower error across the dataset than do any of the polynomial models. Our model requires a focus on safety, so we'll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.
