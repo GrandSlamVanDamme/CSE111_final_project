@@ -93,11 +93,9 @@ def residuals(Y, F, func_type="linear"):
 
     resid = []
     if func_type == "exponential" or func_type == "power":
-        Y = [np.e**y for y in Y]  # calculated with non-linearized y values
-    else:
-        pass
+        F = [np.e**f for f in F]  # calculated with non-linearized y values
 
-    for f, y in zip(F, Y):
+    for y, f in zip(Y, F):
         resid.append(y - f)
 
     return resid
@@ -115,7 +113,7 @@ def arrayer(x, Y):
     return x_array, Y_array
 
 
-def temp_finder(X, Y, n):
+def temp_finder(X, Y, n, func_type="exponential", x=24):
     """
     Takes X, Y, n then obtains
     user input for time since
@@ -129,17 +127,21 @@ def temp_finder(X, Y, n):
     x = float(input("How many hours has it been since the reactor shut down"))
     """
 
-    x = 24
-    X, Y, n = ff.functionator(X, Y, "exponential", n)[0:3]
+    X, Y, n = ff.functionator(X, Y, func_type, n)[0:3]
 
     # LS2_coeffs = LS2_fit(X, Y, n)
-    cheb_coeffs = ff.chebyshevify(X, Y, n)
+    coeffs = ff.chebyshevify(X, Y, n)
     # abs_dev_coeffs = absdev_fit(X, Y, n)
 
     # LS2 = np.polyval(LS2_coeffs, x)
-    cheb = np.polyval(cheb_coeffs, x)
+    if func_type == "exponential" or func_type == "power":
+        temp = np.exp(np.polyval(coeffs, x))
+    else:
+        temp = np.polyval(coeffs, x)
     # absdev = np.polyval(abs_dev_coeffs, x)
 
-    T = f"After {x} hours, we project an estimated reactor temperature of {cheb:.3f} degrees centigrade."
+    print(
+        f"After {x} hours, we project an estimated reactor temperature of {temp:.3f} degrees centigrade."
+    )
 
-    return T
+    return temp

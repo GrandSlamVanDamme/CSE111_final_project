@@ -292,7 +292,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<div id="1c6f7f61" class="cell" data-execution_count="1">
+<div id="2e185b26" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -351,7 +351,7 @@ window.Quarto = {
 <section id="linear" class="level2">
 <h2 class="anchored" data-anchor-id="linear">Linear:</h2>
 <p>Of form <span class="math inline">\(T(t)=c_1\cdot t + c_2\)</span>.</p>
-<div id="a1d497e6" class="cell" data-execution_count="2">
+<div id="2607b1f8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"linear"</span>, <span class="dv">1</span>)</span>
@@ -397,7 +397,7 @@ window.Quarto = {
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -541,7 +541,8 @@ import scipy as sci
 import pandas as pd
 
 import plots_and_tables as pat
-
+import error_analysis as ea
+import fitting_functions as ff
 
 X = [1, 2, 4, 8, 12, 18]  # hours from reactor shutdown
 Y = [580, 510, 430, 340, 290, 230]  # temperature of reactor in C
@@ -564,6 +565,28 @@ def main():
 if __name__ == "__main__":
     main()
 
+print(ea.residuals(Y, Y))
+print(
+    ea.residuals(
+        Y,
+        np.polyval(
+            ff.chebyshevify(
+                ff.functionator(X, Y, "exponential", N)[0],
+                ff.functionator(X, Y, "exponential", N)[1],
+                ff.functionator(X, Y, "exponential", N)[2],
+            ),
+            ff.x_list(X),
+        ),
+    )
+)
+print(
+    ff.chebyshevify(
+        ff.functionator(X, Y, "exponential", N)[0],
+        ff.functionator(X, Y, "exponential", N)[1],
+        ff.functionator(X, Y, "exponential", N)[2],
+    )
+)
+
 
 ## file: fitting_functions.py
 """
@@ -583,12 +606,6 @@ def poly_degree(n):
     takes a whole number n and returns a string for labeling
     a polynomial of degree n.
     """
-    if n &lt; 0:
-        try:
-            n = int(input("Please enter a whole number for the value of n"))
-        except ValueError:
-            n = 3
-            print("There. n=3. Happy?")
 
     degree_list = ["zeroth", "linear", "quadratic", "cubic", "quartic", "quintic"]
 
@@ -1051,11 +1068,9 @@ def residuals(Y, F, func_type="linear"):
 
     resid = []
     if func_type == "exponential" or func_type == "power":
-        Y = [np.e**y for y in Y]  # calculated with non-linearized y values
-    else:
-        pass
+        F = [np.e**f for f in F]  # calculated with non-linearized y values
 
-    for f, y in zip(F, Y):
+    for y, f in zip(Y, F):
         resid.append(y - f)
 
     return resid
@@ -1073,7 +1088,7 @@ def arrayer(x, Y):
     return x_array, Y_array
 
 
-def temp_finder(X, Y, n):
+def temp_finder(X, Y, n, func_type="exponential", x=24):
     """
     Takes X, Y, n then obtains
     user input for time since
@@ -1087,20 +1102,24 @@ def temp_finder(X, Y, n):
     x = float(input("How many hours has it been since the reactor shut down"))
     """
 
-    x = 24
-    X, Y, n = ff.functionator(X, Y, "exponential", n)[0:3]
+    X, Y, n = ff.functionator(X, Y, func_type, n)[0:3]
 
     # LS2_coeffs = LS2_fit(X, Y, n)
-    cheb_coeffs = ff.chebyshevify(X, Y, n)
+    coeffs = ff.chebyshevify(X, Y, n)
     # abs_dev_coeffs = absdev_fit(X, Y, n)
 
     # LS2 = np.polyval(LS2_coeffs, x)
-    cheb = np.polyval(cheb_coeffs, x)
+    if func_type == "exponential" or func_type == "power":
+        temp = np.exp(np.polyval(coeffs, x))
+    else:
+        temp = np.polyval(coeffs, x)
     # absdev = np.polyval(abs_dev_coeffs, x)
 
-    T = f"After {x} hours, we project an estimated reactor temperature of {cheb:.3f} degrees centigrade."
+    print(
+        f"After {x} hours, we project an estimated reactor temperature of {temp:.3f} degrees centigrade."
+    )
 
-    return T
+    return temp
 
 
 ## file: requirements.txt
@@ -1118,7 +1137,7 @@ IPython</code></pre>
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
 <p>Simple inspection of the plots makes it look as though the exponential model fits the data most closely. We cannot confirm this hunch, however, until we do some analysis on the error of the various plots.</p>
-<div id="08365439" class="cell" data-execution_count="3">
+<div id="cc32d0ea" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plotter(X, Y, <span class="st">"exponential"</span>, <span class="dv">1</span>)</span>
@@ -1164,7 +1183,7 @@ IPython</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -1220,7 +1239,7 @@ IPython</code></pre>
 <p><span class="math display">\[
 \ln[T(t)]=c_1t+c_2.
 \]</span></p>
-<div id="6e1e2b91" class="cell" data-execution_count="4">
+<div id="fff1b538" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>poly_deg <span class="op">=</span> <span class="dv">1</span></span>
@@ -1268,7 +1287,7 @@ IPython</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -1395,7 +1414,8 @@ import scipy as sci
 import pandas as pd
 
 import plots_and_tables as pat
-
+import error_analysis as ea
+import fitting_functions as ff
 
 X = [1, 2, 4, 8, 12, 18]  # hours from reactor shutdown
 Y = [580, 510, 430, 340, 290, 230]  # temperature of reactor in C
@@ -1418,6 +1438,28 @@ def main():
 if __name__ == "__main__":
     main()
 
+print(ea.residuals(Y, Y))
+print(
+    ea.residuals(
+        Y,
+        np.polyval(
+            ff.chebyshevify(
+                ff.functionator(X, Y, "exponential", N)[0],
+                ff.functionator(X, Y, "exponential", N)[1],
+                ff.functionator(X, Y, "exponential", N)[2],
+            ),
+            ff.x_list(X),
+        ),
+    )
+)
+print(
+    ff.chebyshevify(
+        ff.functionator(X, Y, "exponential", N)[0],
+        ff.functionator(X, Y, "exponential", N)[1],
+        ff.functionator(X, Y, "exponential", N)[2],
+    )
+)
+
 
 ## file: fitting_functions.py
 """
@@ -1437,12 +1479,6 @@ def poly_degree(n):
     takes a whole number n and returns a string for labeling
     a polynomial of degree n.
     """
-    if n &lt; 0:
-        try:
-            n = int(input("Please enter a whole number for the value of n"))
-        except ValueError:
-            n = 3
-            print("There. n=3. Happy?")
 
     degree_list = ["zeroth", "linear", "quadratic", "cubic", "quartic", "quintic"]
 
@@ -1905,11 +1941,9 @@ def residuals(Y, F, func_type="linear"):
 
     resid = []
     if func_type == "exponential" or func_type == "power":
-        Y = [np.e**y for y in Y]  # calculated with non-linearized y values
-    else:
-        pass
+        F = [np.e**f for f in F]  # calculated with non-linearized y values
 
-    for f, y in zip(F, Y):
+    for y, f in zip(Y, F):
         resid.append(y - f)
 
     return resid
@@ -1927,7 +1961,7 @@ def arrayer(x, Y):
     return x_array, Y_array
 
 
-def temp_finder(X, Y, n):
+def temp_finder(X, Y, n, func_type="exponential", x=24):
     """
     Takes X, Y, n then obtains
     user input for time since
@@ -1941,20 +1975,24 @@ def temp_finder(X, Y, n):
     x = float(input("How many hours has it been since the reactor shut down"))
     """
 
-    x = 24
-    X, Y, n = ff.functionator(X, Y, "exponential", n)[0:3]
+    X, Y, n = ff.functionator(X, Y, func_type, n)[0:3]
 
     # LS2_coeffs = LS2_fit(X, Y, n)
-    cheb_coeffs = ff.chebyshevify(X, Y, n)
+    coeffs = ff.chebyshevify(X, Y, n)
     # abs_dev_coeffs = absdev_fit(X, Y, n)
 
     # LS2 = np.polyval(LS2_coeffs, x)
-    cheb = np.polyval(cheb_coeffs, x)
+    if func_type == "exponential" or func_type == "power":
+        temp = np.exp(np.polyval(coeffs, x))
+    else:
+        temp = np.polyval(coeffs, x)
     # absdev = np.polyval(abs_dev_coeffs, x)
 
-    T = f"After {x} hours, we project an estimated reactor temperature of {cheb:.3f} degrees centigrade."
+    print(
+        f"After {x} hours, we project an estimated reactor temperature of {temp:.3f} degrees centigrade."
+    )
 
-    return T
+    return temp
 
 
 ## file: requirements.txt
@@ -1965,13 +2003,16 @@ pandas
 tabulate</code></pre>
 <p>As can be seen in the table above, naïve observation looks to be correct, here. The exponential cooling model shows a much lower error across the dataset than do any of the polynomial models. Our model requires a focus on safety, so we’ll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.</p>
 <p>Since the exponential model shows the lowest error, we’ll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after <span class="math inline">\(24\)</span> hours of cooling.</p>
-<div id="789660ec" class="cell" data-execution_count="5">
+<div id="2b8f7fa2" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Reveal Secrets</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>temp_finder(X, Y, N)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>'After 24 hours, we project an estimated reactor temperature of 5.084 degrees centigrade.'</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>After 24 hours, we project an estimated reactor temperature of 161.387 degrees centigrade.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>np.float64(161.38718417550982)</code></pre>
 </div>
 </div>
 </section>

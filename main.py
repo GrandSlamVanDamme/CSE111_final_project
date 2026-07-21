@@ -27,7 +27,8 @@ import scipy as sci
 import pandas as pd
 
 import plots_and_tables as pat
-
+import error_analysis as ea
+import fitting_functions as ff
 
 X = [1, 2, 4, 8, 12, 18]  # hours from reactor shutdown
 Y = [580, 510, 430, 340, 290, 230]  # temperature of reactor in C
@@ -49,3 +50,25 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print(ea.residuals(Y, Y))
+print(
+    ea.residuals(
+        Y,
+        np.polyval(
+            ff.chebyshevify(
+                ff.functionator(X, Y, "exponential", N)[0],
+                ff.functionator(X, Y, "exponential", N)[1],
+                ff.functionator(X, Y, "exponential", N)[2],
+            ),
+            ff.x_list(X),
+        ),
+    )
+)
+print(
+    ff.chebyshevify(
+        ff.functionator(X, Y, "exponential", N)[0],
+        ff.functionator(X, Y, "exponential", N)[1],
+        ff.functionator(X, Y, "exponential", N)[2],
+    )
+)

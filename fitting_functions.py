@@ -15,12 +15,6 @@ def poly_degree(n):
     takes a whole number n and returns a string for labeling
     a polynomial of degree n.
     """
-    if n < 1:
-        try:
-            n = int(input("Please enter a whole number for the value of n"))
-        except ValueError:
-            n = 3
-            print("There. n=3. Happy?")
 
     degree_list = ["zeroth", "linear", "quadratic", "cubic", "quartic", "quintic"]
 
