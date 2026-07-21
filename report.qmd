@@ -216,80 +216,15 @@ plotter(X, Y, "power", 1)
 coeff_table(X, Y, "power", 1)
 ```
 
-# 6. Interpretation
+# 6. Validation
 
-Results of error analysis are given in the table below.
-
-```{shinylive-python}
-#| standalone: true
-#| viewerHeight: 800
-
-"""
-code modified from example in docs at https://quarto-ext.github.io/shinylive/
-This gemini conversation used for debugging and editing:                                              
-https://gemini.google.com/share/59ac2467bf7b                                  
-"""
-
-from main import *
-'''
-from fitting_functions import *
-from error_analysis import *
-from plots_and_tables import *
-'''
-from shiny import *
-import shinywidgets as shw
-
-app_ui = ui.page_fluid(
-    ui.layout_columns(
-        ui.div(
-        ui.input_slider("n", "Degree of Polynomial Fit:", min=1, max=20, value = 2),
-        ui.output_table("error_table") 
-    )
-)
-)
-
-def server(input: Inputs, output: Outputs, session: Session):
-    
-    @render.table
-    def error_table():
-        N = input.n() 
-        '''I know you aren't supposed to use capitals for inputs, 
-        but this prevented the need for giving main() arguments''' 
-        return main()
-          
-
-app = App(app_ui, server)
-
-## file: main.py
-{{< include main.py >}}
-
-## file: fitting_functions.py
-{{< include fitting_functions.py >}}
-
-## file: plots_and_tables.py
-{{< include plots_and_tables.py >}}
-
-## file: error_analysis.py
-{{< include error_analysis.py >}}
-
-## file: requirements.txt
-matplotlib
-numpy
-scipy
-pandas
-tabulate
-IPython
-```
-
-As can be seen in the table above, naïve observation looks to be correct, here. The exponential cooling model shows a much lower error across the dataset than do any of the polynomial models. Our model requires a focus on safety, so we'll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.
+We'll use a Chebyshev optimization of the exponential fit. See the following section for a more thorough explanation of these choices.
 
 Since the exponential model shows the lowest error, we'll use it for extrapolation. We make a prediction for the bulk temperature of the reactor components after $24$ hours of cooling.
 ```{python}
 
 temp_finder(X, Y, N)
 ```
-
-# 7. Validation
 
 We chose a Chebyshev error-optimized exponential fit to model the cooling rate of this nuclear plant reactor.
 This is because the worst case scenario (the largest single residual) is minimized through Chebyshev optimization. We need to account not just for a comprehensive overview of error, but for the Murphy's Law example where the air is hot and humid, the cooling pool circulator is broken, and all other systems operate at minimal effectiveness. We must work under these assumptions because an overly optimistic prediction could have unacceptable consequences to the plant and its environs. We chose the exponential fit because it minimized the Chebyshev error most effectively and did so with the least over-fitting of any model.
@@ -308,8 +243,7 @@ T_R(t) & = (T_E - T_R)e^{-kt} \\
 
 Where $T_R$ is the reactor temperature and $T_E$ is the external temperature, substituted for $T_0$ due to our assumption that the external/surrounding air temperature is constant across the range of observation.
 
-
-# 8. Re-evaluation and Improvement
+# 7. Re-evaluation and Improvement
 
 This model has a major weakness in that it approaches the problem deterministically. In reality, we would benefit from introducing randomness into our analysis, since that could provide closer estimates of daily temperature, humidity, and component failure rates while retaining this model's emphasis on multi-system error. That would enable a more efficient response to uncertainty than the chosen model where all predictions are made according to an edge case.
 

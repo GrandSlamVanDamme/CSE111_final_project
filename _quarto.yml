@@ -11,7 +11,9 @@ website:
       - href: report.qmd
         text: REPORT
       - href: showcase.qmd
-        text: main function showcase 
+        text: main function showcase
+      - href: https://github.com/GrandSlamVanDamme/CSE111_final_project/tree/main
+        text: Parent Repo 
   page-footer: 
     border: true
     left: "Corey Silver 2026©"
